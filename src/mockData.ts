@@ -1,5 +1,9 @@
 import { Transaction, Mission, Badge, UserProfile, ClothingItem, Character } from './types';
 
+const now = new Date();
+const currentMonth = now.getMonth();
+const currentYear = now.getFullYear();
+
 export const initialTransactions: Transaction[] = [
   {
     id: '1',
@@ -7,7 +11,7 @@ export const initialTransactions: Transaction[] = [
     amount: 3500,
     description: 'Projeto Freelance - Site Institucional',
     category: 'Freelance',
-    date: new Date(2024, 2, 15),
+    date: new Date(currentYear, currentMonth, 15),
   },
   {
     id: '2',
@@ -15,7 +19,7 @@ export const initialTransactions: Transaction[] = [
     amount: 150,
     description: 'Supermercado',
     category: 'Alimentação',
-    date: new Date(2024, 2, 14),
+    date: new Date(currentYear, currentMonth, 14),
   },
   {
     id: '3',
@@ -23,7 +27,7 @@ export const initialTransactions: Transaction[] = [
     amount: 89.90,
     description: 'Assinatura Adobe Creative',
     category: 'Ferramentas',
-    date: new Date(2024, 2, 13),
+    date: new Date(currentYear, currentMonth, 13),
   },
   {
     id: '4',
@@ -31,7 +35,7 @@ export const initialTransactions: Transaction[] = [
     amount: 1200,
     description: 'Consultoria',
     category: 'Freelance',
-    date: new Date(2024, 2, 12),
+    date: new Date(currentYear, currentMonth, 12),
   },
   {
     id: '5',
@@ -39,7 +43,7 @@ export const initialTransactions: Transaction[] = [
     amount: 45,
     description: 'Uber',
     category: 'Transporte',
-    date: new Date(2024, 2, 11),
+    date: new Date(currentYear, currentMonth, 11),
   },
 ];
 
