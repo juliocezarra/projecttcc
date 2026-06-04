@@ -1,5 +1,5 @@
-import { FormEvent, useState } from 'react';
-import { Filter, Plus, TrendingDown, TrendingUp } from 'lucide-react';
+import { useState } from 'react';
+import { Plus, TrendingUp, TrendingDown, Filter } from 'lucide-react';
 import { useApp } from '../AppContext';
 
 export const Transactions = () => {
@@ -13,8 +13,8 @@ export const Transactions = () => {
     category: '',
   });
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
     if (!formData.amount || !formData.description || !formData.category) {
       return;
@@ -22,7 +22,7 @@ export const Transactions = () => {
 
     addTransaction({
       type: formData.type,
-      amount: Number(formData.amount),
+      amount: parseFloat(formData.amount),
       description: formData.description,
       category: formData.category,
     });
@@ -53,15 +53,15 @@ export const Transactions = () => {
     }).format(date);
   };
 
-  const filteredTransactions = transactions.filter((transaction) =>
-    filterType === 'all' ? true : transaction.type === filterType
+  const filteredTransactions = transactions.filter((t) =>
+    filterType === 'all' ? true : t.type === filterType
   );
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <h2 className="text-2xl font-bold text-white">Transações</h2>
-        <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-3">
           <div className="flex bg-gray-800 rounded-lg p-1 border border-gray-700">
             <button
               onClick={() => setFilterType('all')}
@@ -113,8 +113,8 @@ export const Transactions = () => {
                 <label className="block text-sm font-medium text-gray-300 mb-2">Tipo</label>
                 <select
                   value={formData.type}
-                  onChange={(event) =>
-                    setFormData({ ...formData, type: event.target.value as 'income' | 'expense' })
+                  onChange={(e) =>
+                    setFormData({ ...formData, type: e.target.value as 'income' | 'expense' })
                   }
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-cyan-500 transition-colors"
                 >
@@ -127,10 +127,9 @@ export const Transactions = () => {
                 <label className="block text-sm font-medium text-gray-300 mb-2">Valor</label>
                 <input
                   type="number"
-                  min="0.01"
                   step="0.01"
                   value={formData.amount}
-                  onChange={(event) => setFormData({ ...formData, amount: event.target.value })}
+                  onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                   placeholder="0.00"
                   className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors"
                   required
@@ -143,8 +142,8 @@ export const Transactions = () => {
               <input
                 type="text"
                 value={formData.description}
-                onChange={(event) => setFormData({ ...formData, description: event.target.value })}
-                placeholder="Ex: Supermercado, freelance..."
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                placeholder="Ex: Supermercado, Freelance..."
                 className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors"
                 required
               />
@@ -155,8 +154,8 @@ export const Transactions = () => {
               <input
                 type="text"
                 value={formData.category}
-                onChange={(event) => setFormData({ ...formData, category: event.target.value })}
-                placeholder="Ex: Alimentação, trabalho..."
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                placeholder="Ex: Alimentação, Trabalho..."
                 className="w-full px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 transition-colors"
                 required
               />
@@ -193,15 +192,18 @@ export const Transactions = () => {
           {filteredTransactions.map((transaction) => (
             <div
               key={transaction.id}
-              className="flex items-center justify-between gap-4 p-4 bg-gray-900 rounded-lg border border-gray-700 hover:border-gray-600 transition-all duration-200"
+              className="flex items-center justify-between p-4 bg-gray-900 rounded-lg border border-gray-700 hover:border-gray-600 transition-all duration-200"
             >
-              <div className="flex items-center gap-4 min-w-0">
+              <div className="flex items-center gap-4">
                 <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
-                    transaction.type === 'income'
-                      ? 'bg-green-500/20 text-green-400'
-                      : 'bg-red-500/20 text-red-400'
-                  }`}
+                  className={`
+                    w-12 h-12 rounded-full flex items-center justify-center
+                    ${
+                      transaction.type === 'income'
+                        ? 'bg-green-500/20 text-green-400'
+                        : 'bg-red-500/20 text-red-400'
+                    }
+                  `}
                 >
                   {transaction.type === 'income' ? (
                     <TrendingUp className="w-6 h-6" />
@@ -209,18 +211,19 @@ export const Transactions = () => {
                     <TrendingDown className="w-6 h-6" />
                   )}
                 </div>
-                <div className="min-w-0">
-                  <p className="font-semibold text-white text-lg truncate">{transaction.description}</p>
+                <div>
+                  <p className="font-semibold text-white text-lg">{transaction.description}</p>
                   <p className="text-sm text-gray-400">
                     {transaction.category} • {formatDate(transaction.date)}
                   </p>
                 </div>
               </div>
-              <div className="text-right shrink-0">
+              <div className="text-right">
                 <p
-                  className={`text-xl font-bold ${
-                    transaction.type === 'income' ? 'text-green-400' : 'text-red-400'
-                  }`}
+                  className={`
+                    text-xl font-bold
+                    ${transaction.type === 'income' ? 'text-green-400' : 'text-red-400'}
+                  `}
                 >
                   {transaction.type === 'income' ? '+' : '-'}
                   {formatCurrency(transaction.amount)}

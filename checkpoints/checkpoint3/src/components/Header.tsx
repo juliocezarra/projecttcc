@@ -1,4 +1,4 @@
-import { Coins, Sparkles, User } from 'lucide-react';
+import { User, Sparkles } from 'lucide-react';
 import { useApp } from '../AppContext';
 
 export const Header = () => {
@@ -8,14 +8,14 @@ export const Header = () => {
   return (
     <div className="bg-gray-900 border-b border-gray-800 p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between gap-4 mb-4">
-          <div className="flex items-center gap-4 min-w-0">
-            <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-cyan-500/30 shrink-0">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-cyan-500/30">
               <User className="w-7 h-7 text-white" />
             </div>
-            <div className="min-w-0">
-              <h2 className="text-2xl font-bold text-white truncate">{userProfile.name}</h2>
-              <p className="text-gray-400 text-sm">Controle financeiro com progresso visível.</p>
+            <div>
+              <h2 className="text-2xl font-bold text-white">{userProfile.name}</h2>
+              <p className="text-gray-400 text-sm">Seja bem-vindo de volta!</p>
             </div>
           </div>
 
@@ -25,11 +25,8 @@ export const Header = () => {
               <p className="text-xl font-bold text-amber-400">{userProfile.streak} dias 🔥</p>
             </div>
             <div className="text-right">
-              <p className="text-gray-400 text-sm">Moedas</p>
-              <p className="text-xl font-bold text-white flex items-center justify-end gap-1">
-                <Coins className="w-5 h-5 text-amber-400" />
-                {userProfile.coins}
-              </p>
+              <p className="text-gray-400 text-sm">Transações</p>
+              <p className="text-xl font-bold text-white">{userProfile.totalTransactions}</p>
             </div>
           </div>
         </div>

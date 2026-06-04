@@ -25,16 +25,6 @@ export interface Badge {
   icon: string;
 }
 
-export interface FinancialGoal {
-  id: string;
-  title: string;
-  targetAmount: number;
-  currentAmount: number;
-  category: string;
-  rewardCoins: number;
-  completed: boolean;
-}
-
 export interface UserProfile {
   name: string;
   level: number;

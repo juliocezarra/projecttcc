@@ -1,6 +1,6 @@
-import { LayoutDashboard, ArrowLeftRight, Target, User, Menu, X, Trophy } from 'lucide-react';
-import { useState } from 'react';
+import { LayoutDashboard, ArrowLeftRight, Target, User, Menu, X } from 'lucide-react';
 import { useApp } from '../AppContext';
+import { useState } from 'react';
 
 export const Sidebar = () => {
   const { currentView, setCurrentView } = useApp();
@@ -9,8 +9,7 @@ export const Sidebar = () => {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'transactions', label: 'Transações', icon: ArrowLeftRight },
-    { id: 'missions', label: 'Missões', icon: Trophy },
-    { id: 'goals', label: 'Metas', icon: Target },
+    { id: 'missions', label: 'Missões', icon: Target },
     { id: 'profile', label: 'Perfil', icon: User },
   ];
 
@@ -21,7 +20,6 @@ export const Sidebar = () => {
       <button
         onClick={toggleMobile}
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-gray-800 rounded-lg text-white"
-        aria-label="Abrir menu"
       >
         {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
@@ -77,7 +75,7 @@ export const Sidebar = () => {
 
         <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-800">
           <div className="text-xs text-gray-500 text-center">
-            <p>Versão 1.1.0</p>
+            <p>Versão 1.0.0</p>
             <p className="mt-1">Gamificação Financeira</p>
           </div>
         </div>

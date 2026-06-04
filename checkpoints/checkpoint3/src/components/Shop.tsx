@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, Coins, Lock, ShoppingBag } from 'lucide-react';
+import { ShoppingBag, Coins, Check, Lock } from 'lucide-react';
 import { useApp } from '../AppContext';
 import { ClothingCategory } from '../types';
 import { ItemPreview } from './ItemPreview';
@@ -10,9 +10,9 @@ export const Shop = () => {
 
   const categories: { id: ClothingCategory; label: string; emoji: string }[] = [
     { id: 'head', label: 'Cabeça', emoji: '👒' },
-    { id: 'shirt', label: 'Parte superior', emoji: '👕' },
-    { id: 'pants', label: 'Calças', emoji: '👖' },
-    { id: 'feet', label: 'Calçados', emoji: '👟' },
+    { id: 'shirt', label: 'Camiseta', emoji: '👕' },
+    { id: 'pants', label: 'Calça', emoji: '👖' },
+    { id: 'feet', label: 'Pés', emoji: '👟' },
   ];
 
   const filteredItems = availableClothing.filter((item) => item.category === selectedCategory);
@@ -45,7 +45,7 @@ export const Shop = () => {
         </h2>
         <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-600 to-orange-600 rounded-lg">
           <Coins className="w-5 h-5 text-white" />
-          <span className="font-bold text-white">{userProfile.coins} moedas</span>
+          <span className="font-bold text-white">{userProfile.coins} Moedas</span>
         </div>
       </div>
 
@@ -79,13 +79,16 @@ export const Shop = () => {
           return (
             <div
               key={item.id}
-              className={`rounded-xl border-2 transition-all duration-200 ${
-                equipped
-                  ? 'border-cyan-500 bg-gradient-to-br from-cyan-900/30 to-blue-900/30 shadow-lg shadow-cyan-500/30'
-                  : owned
-                    ? 'border-gray-700 bg-gray-900'
-                    : 'border-gray-800 bg-gray-850'
-              }`}
+              className={`
+                rounded-xl border-2 transition-all duration-200
+                ${
+                  equipped
+                    ? 'border-cyan-500 bg-gradient-to-br from-cyan-900/30 to-blue-900/30 shadow-lg shadow-cyan-500/30'
+                    : owned
+                      ? 'border-gray-700 bg-gray-900'
+                      : 'border-gray-800 bg-gray-850'
+                }
+              `}
             >
               <div className="p-4">
                 <div className="mb-3 flex flex-col items-center justify-center h-32 bg-slate-800/50 rounded-lg">
@@ -95,9 +98,6 @@ export const Shop = () => {
                   <div className={`px-3 py-1 rounded-full text-xs font-bold ${rarity.bg} ${rarity.text}`}>
                     {rarity.label}
                   </div>
-                  <span className="text-xl" aria-hidden="true">
-                    {item.emoji}
-                  </span>
                 </div>
 
                 <h3 className="font-bold text-white mb-1">{item.name}</h3>
@@ -108,36 +108,42 @@ export const Shop = () => {
                 </div>
 
                 {owned ? (
-                  equipped ? (
-                    <button
-                      disabled
-                      className="w-full py-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-lg font-semibold flex items-center justify-center gap-2 cursor-default"
-                    >
-                      <Check className="w-4 h-4" />
-                      Equipado
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => equipItem(item.id, selectedCategory)}
-                      className="w-full py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold transition-colors"
-                    >
-                      Equipar
-                    </button>
-                  )
+                  <>
+                    {equipped ? (
+                      <button
+                        disabled
+                        className="w-full py-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-lg font-semibold flex items-center justify-center gap-2 cursor-default"
+                      >
+                        <Check className="w-4 h-4" />
+                        Equipado
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => equipItem(item.id, selectedCategory)}
+                        className="w-full py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold transition-colors"
+                      >
+                        Equipar
+                      </button>
+                    )}
+                  </>
                 ) : (
                   <button
                     onClick={() => handleBuy(item.id)}
                     disabled={userProfile.coins < item.price}
-                    className={`w-full py-2 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
-                      userProfile.coins < item.price
-                        ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:shadow-lg hover:shadow-green-500/30'
-                    }`}
+                    className={`
+                      w-full py-2 rounded-lg font-semibold transition-all duration-200
+                      flex items-center justify-center gap-2
+                      ${
+                        userProfile.coins < item.price
+                          ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                          : 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:shadow-lg hover:shadow-green-500/30'
+                      }
+                    `}
                   >
                     {userProfile.coins < item.price ? (
                       <>
                         <Lock className="w-4 h-4" />
-                        Sem moedas
+                        Sem Moedas
                       </>
                     ) : (
                       <>

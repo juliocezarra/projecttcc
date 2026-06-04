@@ -4,7 +4,6 @@ import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
 import { Transactions } from './components/Transactions';
 import { Missions } from './components/Missions';
-import { Goals } from './components/Goals';
 import { Profile } from './components/Profile';
 import { ToastContainer } from './components/Toast';
 
@@ -19,8 +18,6 @@ const AppContent = () => {
         return <Transactions />;
       case 'missions':
         return <Missions />;
-      case 'goals':
-        return <Goals />;
       case 'profile':
         return <Profile />;
       default:

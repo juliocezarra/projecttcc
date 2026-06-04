@@ -192,24 +192,6 @@ function createHeadAccessory(itemId: string): THREE.Group {
       }
       break;
     }
-    default: {
-      const band = new THREE.Mesh(new THREE.TorusGeometry(0.52, 0.035, 8, 32), mat);
-      band.rotation.x = Math.PI / 2;
-      band.position.y = 0.1;
-      group.add(band);
-
-      const visorMat = new THREE.MeshPhongMaterial({
-        color: 0x22d3ee,
-        emissive: 0x0891b2,
-        emissiveIntensity: 0.8,
-        transparent: true,
-        opacity: 0.7,
-      });
-      const visor = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.12, 0.06), visorMat);
-      visor.position.set(0, 0.02, 0.52);
-      group.add(visor);
-      break;
-    }
   }
 
   return group;
@@ -402,28 +384,6 @@ function createShirt(itemId: string): THREE.Group {
       ring.position.set(0, 0, 0);
       ring.rotation.x = Math.PI / 2;
       group.add(ring);
-      break;
-    }
-    default: {
-      const torso = new THREE.Mesh(new THREE.BoxGeometry(0.95, 1.15, 0.56), mat);
-      group.add(torso);
-
-      const shoulderGeo = new THREE.BoxGeometry(0.28, 0.28, 0.5);
-      const leftShoulder = new THREE.Mesh(shoulderGeo, mat);
-      leftShoulder.position.set(-0.58, 0.35, 0);
-      group.add(leftShoulder);
-      const rightShoulder = new THREE.Mesh(shoulderGeo, mat);
-      rightShoulder.position.set(0.58, 0.35, 0);
-      group.add(rightShoulder);
-
-      const coreMat = new THREE.MeshPhongMaterial({
-        color: 0x22d3ee,
-        emissive: 0x22d3ee,
-        emissiveIntensity: 0.6,
-      });
-      const core = new THREE.Mesh(new THREE.OctahedronGeometry(0.12), coreMat);
-      core.position.set(0, 0.15, 0.32);
-      group.add(core);
       break;
     }
   }
@@ -635,30 +595,6 @@ function createPants(itemId: string): THREE.Group {
       group.add(glow);
       break;
     }
-    default: {
-      const waist = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.25, 0.5), mat);
-      group.add(waist);
-
-      const legGeo = new THREE.BoxGeometry(0.34, 0.92, 0.45);
-      const leftLeg = new THREE.Mesh(legGeo, mat);
-      leftLeg.position.set(-0.22, -0.45, 0);
-      group.add(leftLeg);
-      const rightLeg = new THREE.Mesh(legGeo, mat);
-      rightLeg.position.set(0.22, -0.45, 0);
-      group.add(rightLeg);
-
-      const lineMat = new THREE.MeshPhongMaterial({
-        color: 0x22d3ee,
-        emissive: 0x0891b2,
-        emissiveIntensity: 0.7,
-      });
-      for (const x of [-0.38, 0.38]) {
-        const strip = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.85, 0.48), lineMat);
-        strip.position.set(x, -0.42, 0);
-        group.add(strip);
-      }
-      break;
-    }
   }
 
   return group;
@@ -793,26 +729,6 @@ function createFeet(itemId: string): THREE.Group {
         meshes.push(glow);
         break;
       }
-      default: {
-        const sole = new THREE.Mesh(
-          new THREE.BoxGeometry(0.34, 0.12, 0.52),
-          new THREE.MeshPhongMaterial({ color: 0x111827 })
-        );
-        sole.position.set(xPos, -0.05, 0.04);
-        meshes.push(sole);
-
-        const upper = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.22, 0.42), mat);
-        upper.position.set(xPos, 0.05, 0);
-        meshes.push(upper);
-
-        const accent = new THREE.Mesh(
-          new THREE.BoxGeometry(0.22, 0.04, 0.46),
-          new THREE.MeshPhongMaterial({ color: 0x22d3ee, emissive: 0x0891b2, emissiveIntensity: 0.5 })
-        );
-        accent.position.set(xPos, 0.12, 0.04);
-        meshes.push(accent);
-        break;
-      }
     }
     return meshes;
   };
@@ -842,12 +758,12 @@ export const CharacterAvatar = ({ character, size = 'medium' }: CharacterAvatarP
     if (!containerRef.current) return;
 
     const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x1e293b);
 
-    const camera = new THREE.PerspectiveCamera(45, dimensions.width / dimensions.height, 0.1, 1000);
-    camera.position.set(0, 0.15, 5.2);
-    camera.lookAt(0, 0.15, 0);
+    const camera = new THREE.PerspectiveCamera(50, dimensions.width / dimensions.height, 0.1, 1000);
+    camera.position.set(0, 0.3, 5.5);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(dimensions.width, dimensions.height);
     renderer.setPixelRatio(window.devicePixelRatio);
     containerRef.current.appendChild(renderer.domElement);
@@ -857,32 +773,9 @@ export const CharacterAvatar = ({ character, size = 'medium' }: CharacterAvatarP
     scene.add(group);
     groupRef.current = group;
 
-    const baseMat = new THREE.MeshPhongMaterial({
-      color: 0x0f766e,
-      emissive: 0x083344,
-      emissiveIntensity: 0.35,
-      transparent: true,
-      opacity: 0.55,
-    });
-    const base = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 1.1, 0.08, 48), baseMat);
-    base.position.y = -1.86;
-    scene.add(base);
-
-    const haloMat = new THREE.MeshPhongMaterial({
-      color: 0x22d3ee,
-      emissive: 0x22d3ee,
-      emissiveIntensity: 0.6,
-      transparent: true,
-      opacity: 0.35,
-    });
-    const halo = new THREE.Mesh(new THREE.TorusGeometry(1.05, 0.015, 8, 72), haloMat);
-    halo.position.y = -1.8;
-    halo.rotation.x = Math.PI / 2;
-    scene.add(halo);
-
     // Head
     const headGeo = new THREE.SphereGeometry(0.5, 32, 32);
-    const headMat = new THREE.MeshPhongMaterial({ color: 0xf0b37e, shininess: 18 });
+    const headMat = new THREE.MeshPhongMaterial({ color: 0xf4a460 });
     const head = new THREE.Mesh(headGeo, headMat);
     head.position.y = 1.65;
     group.add(head);
@@ -988,18 +881,18 @@ export const CharacterAvatar = ({ character, size = 'medium' }: CharacterAvatarP
     }
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.72);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
 
-    const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+    const mainLight = new THREE.DirectionalLight(0xffffff, 0.8);
     mainLight.position.set(3, 5, 5);
     scene.add(mainLight);
 
-    const rimLight = new THREE.DirectionalLight(0x00ffff, 0.55);
+    const rimLight = new THREE.DirectionalLight(0x00ffff, 0.3);
     rimLight.position.set(-3, 2, 3);
     scene.add(rimLight);
 
-    const fillLight = new THREE.DirectionalLight(0x3b82f6, 0.35);
+    const fillLight = new THREE.DirectionalLight(0x3b82f6, 0.2);
     fillLight.position.set(0, -2, 3);
     scene.add(fillLight);
 
@@ -1016,8 +909,6 @@ export const CharacterAvatar = ({ character, size = 'medium' }: CharacterAvatarP
         const breathe = 1 + Math.sin(elapsed * 2) * 0.01;
         groupRef.current.scale.set(breathe, breathe, breathe);
       }
-
-      halo.rotation.z = elapsed * 0.35;
 
       renderer.render(scene, camera);
     };
@@ -1039,7 +930,7 @@ export const CharacterAvatar = ({ character, size = 'medium' }: CharacterAvatarP
         width: `${dimensions.width}px`,
         height: `${dimensions.height}px`,
       }}
-      className="rounded-2xl border-2 border-cyan-500/50 shadow-lg shadow-cyan-500/20 overflow-hidden bg-[radial-gradient(circle_at_50%_25%,rgba(34,211,238,0.22),rgba(15,23,42,0.96)_68%)]"
+      className="rounded-2xl border-2 border-cyan-500/50 shadow-lg shadow-cyan-500/20 overflow-hidden"
     />
   );
 };

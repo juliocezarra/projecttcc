@@ -1,4 +1,4 @@
-import { Check, Shirt } from 'lucide-react';
+import { Shirt, Check } from 'lucide-react';
 import { useApp } from '../AppContext';
 import { clothingItems } from '../mockData';
 import { ClothingCategory } from '../types';
@@ -9,17 +9,17 @@ export const Wardrobe = () => {
 
   const categories: { id: ClothingCategory; label: string; emoji: string }[] = [
     { id: 'head', label: 'Cabeça', emoji: '👒' },
-    { id: 'shirt', label: 'Parte superior', emoji: '👕' },
-    { id: 'pants', label: 'Calças', emoji: '👖' },
-    { id: 'feet', label: 'Calçados', emoji: '👟' },
+    { id: 'shirt', label: 'Camiseta', emoji: '👕' },
+    { id: 'pants', label: 'Calça', emoji: '👖' },
+    { id: 'feet', label: 'Pés', emoji: '👟' },
   ];
 
   const rarityConfig = {
-    common: { bg: 'bg-gray-700', text: 'text-gray-300', label: 'Comum' },
-    uncommon: { bg: 'bg-green-700', text: 'text-green-300', label: 'Incomum' },
-    rare: { bg: 'bg-blue-700', text: 'text-blue-300', label: 'Raro' },
-    epic: { bg: 'bg-purple-700', text: 'text-purple-300', label: 'Épico' },
-    legendary: { bg: 'bg-amber-700', text: 'text-amber-300', label: 'Lendário' },
+    common: { bg: 'bg-gray-700', text: 'text-gray-300' },
+    uncommon: { bg: 'bg-green-700', text: 'text-green-300' },
+    rare: { bg: 'bg-blue-700', text: 'text-blue-300' },
+    epic: { bg: 'bg-purple-700', text: 'text-purple-300' },
+    legendary: { bg: 'bg-amber-700', text: 'text-amber-300' },
   };
 
   return (
@@ -57,11 +57,14 @@ export const Wardrobe = () => {
                     <button
                       key={item.id}
                       onClick={() => equipItem(item.id, cat.id)}
-                      className={`p-3 rounded-lg border-2 transition-all duration-200 ${
-                        isEquipped
-                          ? 'border-cyan-500 bg-gradient-to-br from-cyan-900/40 to-blue-900/40 shadow-lg shadow-cyan-500/30'
-                          : 'border-gray-700 bg-gray-900 hover:border-gray-600'
-                      }`}
+                      className={`
+                        p-3 rounded-lg border-2 transition-all duration-200
+                        ${
+                          isEquipped
+                            ? 'border-cyan-500 bg-gradient-to-br from-cyan-900/40 to-blue-900/40 shadow-lg shadow-cyan-500/30'
+                            : 'border-gray-700 bg-gray-900 hover:border-gray-600'
+                        }
+                      `}
                     >
                       <div className="mb-2 h-16 flex items-center justify-center bg-slate-800/50 rounded">
                         <ItemPreview itemId={item.id} size="small" />
@@ -69,12 +72,12 @@ export const Wardrobe = () => {
                       <p className="text-xs font-semibold text-white text-center mb-2 truncate">
                         {item.name}
                       </p>
-                      <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center justify-between">
                         <div className={`px-2 py-1 rounded text-xs font-bold ${rarity.bg} ${rarity.text}`}>
-                          {rarity.label}
+                          {item.rarity}
                         </div>
                         {isEquipped && (
-                          <div className="flex items-center justify-center w-5 h-5 rounded-full bg-cyan-500 shrink-0">
+                          <div className="flex items-center justify-center w-5 h-5 rounded-full bg-cyan-500">
                             <Check className="w-3 h-3 text-white" />
                           </div>
                         )}
@@ -85,7 +88,7 @@ export const Wardrobe = () => {
 
                 {ownedInCategory.length === 0 && (
                   <div className="col-span-full text-center py-6 text-gray-500">
-                    <p className="text-sm">Nenhum item nesta categoria.</p>
+                    <p className="text-sm">Nenhum item nesta categoria</p>
                   </div>
                 )}
               </div>

@@ -24,3 +24,7 @@ dist-ssr
 
 .vercel
 .env*.local
+
+# Exclude specific documents
+overleaft trabalho.txt
+tcc_2 arquivo.pdf
