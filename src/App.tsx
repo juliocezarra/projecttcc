@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { AppProvider, useApp } from './AppContext';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
@@ -9,8 +10,9 @@ import { Profile } from './components/Profile';
 import { ToastContainer } from './components/Toast';
 import { Onboarding } from './components/Onboarding';
 import { Tutorial } from './components/Tutorial';
+import { MobileLayout } from './components/mobile/MobileLayout';
 
-const AppContent = () => {
+const DesktopLayout = () => {
   const { currentView, onboardingStep } = useApp();
 
   const renderView = () => {
@@ -48,9 +50,17 @@ const AppContent = () => {
 };
 
 function App() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <AppProvider>
-      <AppContent />
+      {isMobile ? <MobileLayout /> : <DesktopLayout />}
     </AppProvider>
   );
 }

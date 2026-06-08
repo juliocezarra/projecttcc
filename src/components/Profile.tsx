@@ -120,33 +120,23 @@ export const Profile = () => {
               <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Conquistas Recentes</h3>
               <div className="flex flex-wrap gap-3">
                 {badges.map((badge) => {
+                  const Icon = badge.unlocked ? Award : Award; // Could use Lock icon if desired
                   return (
                     <div
                       key={badge.id}
-                      className="group relative"
+                      title={`${badge.name}: ${badge.description}`}
+                      className={`
+                        w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300
+                        ${badge.unlocked 
+                          ? 'bg-amber-500/20 border border-amber-500/50 shadow-lg shadow-amber-500/10 scale-110' 
+                          : 'bg-gray-800/50 border border-gray-700/50 grayscale opacity-40'}
+                      `}
                     >
-                      <div
-                        className={`
-                          w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300
-                          ${badge.unlocked 
-                            ? 'bg-amber-500/20 border border-amber-500/50 shadow-lg shadow-amber-500/10 scale-110' 
-                            : 'bg-gray-800/50 border border-gray-700/50 grayscale opacity-40'}
-                        `}
-                      >
-                        {badge.unlocked ? (
-                          <Award className="w-6 h-6 text-amber-400" />
-                        ) : (
-                          <Award className="w-5 h-5 text-gray-600" />
-                        )}
-                      </div>
-
-                      {/* Custom Tooltip */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 bg-gray-900 border border-indigo-500/30 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 pointer-events-none">
-                        <p className="text-white text-xs font-bold mb-1">{badge.name}</p>
-                        <p className="text-gray-400 text-[10px] leading-tight">{badge.description}</p>
-                        {/* Tooltip Arrow */}
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 w-2 h-2 bg-gray-900 border-r border-b border-indigo-500/30 rotate-45" />
-                      </div>
+                      {badge.unlocked ? (
+                        <Award className="w-6 h-6 text-amber-400" />
+                      ) : (
+                        <Award className="w-5 h-5 text-gray-600" />
+                      )}
                     </div>
                   );
                 })}

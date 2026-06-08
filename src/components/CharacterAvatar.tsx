@@ -852,8 +852,8 @@ export const CharacterAvatar = ({ character, size = 'medium' }: CharacterAvatarP
     const camera = new THREE.PerspectiveCamera(45, dimensions.width / dimensions.height, 0.1, 1000);
     
     if (size === 'mini') {
-      camera.position.set(0, 1.2, 3.5);
-      camera.lookAt(0, 1.2, 0);
+      camera.position.set(0.12, 1.45, 3.2);
+      camera.lookAt(0, 1.45, 0);
     } else {
       camera.position.set(0, 0.15, 5.2);
       camera.lookAt(0, 0.15, 0);
@@ -862,6 +862,8 @@ export const CharacterAvatar = ({ character, size = 'medium' }: CharacterAvatarP
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(dimensions.width, dimensions.height);
     renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.domElement.style.display = 'block';
+    renderer.domElement.style.margin = 'auto';
     containerRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
