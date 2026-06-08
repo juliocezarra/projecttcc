@@ -27,7 +27,6 @@ interface AppContextType {
   character: Character;
   ownedItems: Set<string>;
   availableClothing: ClothingItem[];
-  onboardingStep: 'name' | 'tutorial' | 'completed';
   addTransaction: (transaction: Omit<Transaction, 'id' | 'date'>) => void;
   setCurrentView: (view: string) => void;
   removeToast: (id: string) => void;
@@ -35,8 +34,6 @@ interface AppContextType {
   equipItem: (itemId: string, category: string) => void;
   addGoal: (goal: Omit<FinancialGoal, 'id' | 'currentAmount' | 'completed'>) => void;
   contributeToGoal: (goalId: string, amount: number) => void;
-  updateUserName: (name: string) => void;
-  setOnboardingStep: (step: 'name' | 'tutorial' | 'completed') => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -54,33 +51,13 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [missions, setMissions] = useState<Mission[]>(initialMissions);
   const [badges, setBadges] = useState<Badge[]>(initialBadges);
   const [goals, setGoals] = useState<FinancialGoal[]>(initialGoals);
-  const [userProfile, setUserProfile] = useState<UserProfile>(() => {
-    const savedName = localStorage.getItem('gamifinance_user_name');
-    if (savedName) {
-      return { ...initialUserProfile, name: savedName };
-    }
-    return initialUserProfile;
-  });
+  const [userProfile, setUserProfile] = useState<UserProfile>(initialUserProfile);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [currentView, setCurrentView] = useState('dashboard');
   const [character, setCharacter] = useState<Character>(initialCharacter);
   const [ownedItems, setOwnedItems] = useState<Set<string>>(
     new Set(['head-1', 'shirt-1', 'pants-1', 'feet-1'])
   );
-  const [onboardingStep, setOnboardingStepState] = useState<'name' | 'tutorial' | 'completed'>(() => {
-    const saved = localStorage.getItem('gamifinance_onboarding');
-    return (saved as any) || 'name';
-  });
-
-  const setOnboardingStep = useCallback((step: 'name' | 'tutorial' | 'completed') => {
-    setOnboardingStepState(step);
-    localStorage.setItem('gamifinance_onboarding', step);
-  }, []);
-
-  const updateUserName = useCallback((name: string) => {
-    setUserProfile((prev) => ({ ...prev, name }));
-    localStorage.setItem('gamifinance_user_name', name);
-  }, []);
 
   const addToast = useCallback((message: string, type: Toast['type']) => {
     const id = Math.random().toString(36).substring(7);
@@ -319,7 +296,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         character,
         ownedItems,
         availableClothing: clothingItems,
-        onboardingStep,
         addTransaction,
         setCurrentView,
         removeToast,
@@ -327,8 +303,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         equipItem,
         addGoal,
         contributeToGoal,
-        updateUserName,
-        setOnboardingStep,
       }}
     >
       {children}

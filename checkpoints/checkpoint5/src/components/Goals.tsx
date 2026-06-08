@@ -152,7 +152,7 @@ export const Goals = () => {
         </form>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4" data-tutorial="goals-list">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {goals.map((goal) => {
           const progress = Math.min((goal.currentAmount / goal.targetAmount) * 100, 100);
 

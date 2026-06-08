@@ -77,11 +77,11 @@ export const Profile = () => {
     <div className="space-y-6">
       <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-8 border border-gray-700 shadow-lg">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-start mb-8">
-          <div className="flex justify-center sm:justify-start" data-tutorial="profile-avatar">
+          <div className="flex justify-center sm:justify-start">
             <CharacterAvatar character={character} size="large" />
           </div>
 
-          <div className="sm:col-span-2" data-tutorial="profile-details">
+          <div className="sm:col-span-2">
             <h2 className="text-3xl font-bold text-white mb-3">{userProfile.name}</h2>
             <div className="flex items-center gap-2 mb-4 flex-wrap">
               <div className="px-3 py-1 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full">

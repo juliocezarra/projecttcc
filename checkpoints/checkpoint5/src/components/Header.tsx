@@ -7,9 +7,9 @@ export const Header = () => {
 
   return (
     <div className="bg-gray-900 border-b border-gray-800 p-6">
-      <div className="w-full">
+      <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between gap-4 mb-4">
-          <div className="flex items-center gap-4 min-w-0" data-tutorial="header-profile">
+          <div className="flex items-center gap-4 min-w-0">
             <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-cyan-500/30 shrink-0">
               <User className="w-7 h-7 text-white" />
             </div>
@@ -19,7 +19,7 @@ export const Header = () => {
             </div>
           </div>
 
-          <div className="hidden sm:flex items-center gap-6" data-tutorial="header-stats">
+          <div className="hidden sm:flex items-center gap-6">
             <div className="text-right">
               <p className="text-gray-400 text-sm">Sequência</p>
               <p className="text-xl font-bold text-amber-400">{userProfile.streak} dias 🔥</p>
@@ -34,7 +34,7 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className="bg-gray-800 rounded-lg p-4 shadow-lg" data-tutorial="header-level">
+        <div className="bg-gray-800 rounded-lg p-4 shadow-lg">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-cyan-400" />

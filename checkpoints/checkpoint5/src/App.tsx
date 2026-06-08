@@ -7,11 +7,9 @@ import { Missions } from './components/Missions';
 import { Goals } from './components/Goals';
 import { Profile } from './components/Profile';
 import { ToastContainer } from './components/Toast';
-import { Onboarding } from './components/Onboarding';
-import { Tutorial } from './components/Tutorial';
 
 const AppContent = () => {
-  const { currentView, onboardingStep } = useApp();
+  const { currentView } = useApp();
 
   const renderView = () => {
     switch (currentView) {
@@ -32,9 +30,6 @@ const AppContent = () => {
 
   return (
     <div className="min-h-screen bg-gray-950 flex">
-      {onboardingStep === 'name' && <Onboarding />}
-      {onboardingStep === 'tutorial' && <Tutorial />}
-      
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <Header />

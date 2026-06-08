@@ -181,7 +181,7 @@ export const Transactions = () => {
         </div>
       )}
 
-      <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg" data-tutorial="transactions-list">
+      <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg">
         <div className="flex items-center gap-2 mb-6">
           <Filter className="w-5 h-5 text-cyan-400" />
           <h3 className="text-lg font-bold text-white">
