@@ -18,7 +18,7 @@ export const MobileMissions = () => {
 
   return (
     <div className="space-y-4 pb-12">
-      <div className="bg-gray-800 rounded-xl p-4 border border-gray-700 shadow-lg">
+      <div className="bg-gray-800 rounded-xl p-4 border border-gray-700 shadow-lg" data-tutorial="missions-list">
         <h3 className="text-sm font-bold text-white flex items-center gap-2 mb-4 uppercase tracking-wider">
           <Target className="w-4 h-4 text-cyan-400" />
           Missões Ativas

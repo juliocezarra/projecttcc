@@ -43,7 +43,7 @@ export const MobileGoals = () => {
         </form>
       )}
 
-      <div className="space-y-3">
+      <div className="space-y-3" data-tutorial="goals-list">
         {goals.map(g => {
           const p = Math.min((g.currentAmount / g.targetAmount) * 100, 100);
           return (

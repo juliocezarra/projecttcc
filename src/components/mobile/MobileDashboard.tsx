@@ -40,7 +40,7 @@ export const MobileDashboard = () => {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3" data-tutorial="dashboard-summary">
         <div className="bg-gray-800 rounded-xl p-4 border border-gray-700 shadow-lg col-span-2">
           <div className="flex items-center justify-between mb-2">
             <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-cyan-500/30">

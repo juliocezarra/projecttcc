@@ -23,7 +23,7 @@ export const MobileProfile = () => {
       <div className="bg-gray-800 rounded-xl p-4 border border-gray-700 shadow-lg text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600" />
         
-        <div className="flex justify-center mb-2">
+        <div className="flex justify-center mb-2" data-tutorial="profile-avatar">
            <div className="scale-90">
               <CharacterAvatar character={character} size="medium" />
            </div>

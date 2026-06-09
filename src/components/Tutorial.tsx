@@ -14,8 +14,8 @@ const tutorialSteps: TutorialStep[] = [
   {
     target: 'sidebar-nav',
     title: 'Navegação Principal',
-    description: 'Aqui você acessa todas as áreas do app. O menu agora é retrátil para economizar espaço!',
-    position: 'right',
+    description: 'Use a barra de navegação para acessar rapidamente todas as áreas do aplicativo e acompanhar sua jornada.',
+    position: 'top',
     view: 'dashboard',
   },
   {
@@ -28,12 +28,12 @@ const tutorialSteps: TutorialStep[] = [
     target: 'header-stats',
     title: 'Moedas e Sequência',
     description: 'Acompanhe suas moedas e dias ativos. Elas ficam sempre visíveis no topo!',
-    position: 'left',
+    position: 'bottom',
   },
   {
     target: 'header-level',
     title: 'Nível e XP',
-    description: 'Complete missões e registre transações para ganhar XP e subir de nível!',
+    description: 'A barra de XP agora fica junto ao seu Nível. Complete missões para ganhar XP e subir de nível!',
     position: 'bottom',
   },
   {
@@ -79,8 +79,17 @@ export const Tutorial: React.FC = () => {
   const [bubbleStyle, setBubbleStyle] = useState<React.CSSProperties>({});
   const [arrowStyle, setArrowStyle] = useState<React.CSSProperties>({});
   const bubbleRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const step = tutorialSteps[currentStep];
+
+  useEffect(() => {
+    const checkSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', checkSize);
+    return () => window.removeEventListener('resize', checkSize);
+  }, []);
 
   useEffect(() => {
     if (step.view) {
@@ -98,7 +107,9 @@ export const Tutorial: React.FC = () => {
         let top = 0;
         let left = 0;
 
-        switch (step.position) {
+        const currentPosition = (isMobile && step.target === 'sidebar-nav') ? 'top' : step.position;
+
+        switch (currentPosition) {
           case 'bottom':
             top = rect.bottom + 16;
             left = rect.left + rect.width / 2 - bubbleRect.width / 2;
@@ -130,7 +141,7 @@ export const Tutorial: React.FC = () => {
         // Calculate arrow offset based on clamping
         const newArrowStyle: React.CSSProperties = {};
 
-        if (step.position === 'bottom' || step.position === 'top') {
+        if (currentPosition === 'bottom' || currentPosition === 'top') {
           const deltaX = left - clampedLeft;
           newArrowStyle.left = `calc(50% + ${deltaX}px)`;
         } else {
@@ -149,7 +160,7 @@ export const Tutorial: React.FC = () => {
       window.removeEventListener('resize', updatePosition);
       clearTimeout(timer);
     };
-  }, [currentStep, step]);
+  }, [currentStep, step, isMobile]);
 
   const handleNext = () => {
     if (currentStep < tutorialSteps.length - 1) {
@@ -169,6 +180,13 @@ export const Tutorial: React.FC = () => {
     setOnboardingStep('completed');
     setCurrentView('transactions');
   };
+
+  const description = isMobile && step.target === 'sidebar-nav' 
+    ? 'Use a barra de navegação para acessar rapidamente todas as áreas do aplicativo e acompanhar sua jornada.'
+    : step.description;
+
+  const currentPosition = (isMobile && step.target === 'sidebar-nav') ? 'top' : step.position;
+
 
   return (
     <div className="fixed inset-0 z-[110] pointer-events-none">
@@ -193,7 +211,7 @@ export const Tutorial: React.FC = () => {
 
         <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
         <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-          {step.description}
+          {description}
         </p>
 
         <div className="flex items-center justify-between gap-4">
@@ -227,10 +245,10 @@ export const Tutorial: React.FC = () => {
         <div 
           style={arrowStyle}
           className={`absolute w-3 h-3 bg-gray-900 border-l border-t border-indigo-500/50 transform
-            ${step.position === 'bottom' ? '-top-1.5 -translate-x-1/2 rotate-45' : ''}
-            ${step.position === 'top' ? '-bottom-1.5 -translate-x-1/2 rotate-[225deg]' : ''}
-            ${step.position === 'right' ? '-left-1.5 -translate-y-1/2 rotate-[315deg]' : ''}
-            ${step.position === 'left' ? '-right-1.5 -translate-y-1/2 rotate-[135deg]' : ''}
+            ${currentPosition === 'bottom' ? '-top-1.5 -translate-x-1/2 rotate-45' : ''}
+            ${currentPosition === 'top' ? '-bottom-1.5 -translate-x-1/2 rotate-[225deg]' : ''}
+            ${currentPosition === 'right' ? '-left-1.5 -translate-y-1/2 rotate-[315deg]' : ''}
+            ${currentPosition === 'left' ? '-right-1.5 -translate-y-1/2 rotate-[135deg]' : ''}
           `}
         />
       </div>

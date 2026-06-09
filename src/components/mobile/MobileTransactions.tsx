@@ -105,7 +105,7 @@ export const MobileTransactions = () => {
         </form>
       )}
 
-      <div className="space-y-2">
+      <div className="space-y-2" data-tutorial="transactions-list">
         {filtered.map((t) => (
           <div key={t.id} className="bg-gray-800 p-3 rounded-xl border border-gray-700 flex justify-between items-center gap-3">
             <div className="min-w-0">
